@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">RoosterApp</string>
+    <string name="title_activity_test">RoosterApp</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="homeTitle">Schedule</string>
+    <string name="options_title">Options</string>
+
+    <string name="placeHolderText">NO SCHEDULES ADDED YET.</string>
+    <string name="add_schedules">Add schedules</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
