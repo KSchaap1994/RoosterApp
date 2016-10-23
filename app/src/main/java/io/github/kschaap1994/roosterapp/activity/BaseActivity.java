@@ -119,10 +119,4 @@ public abstract class BaseActivity extends AppCompatActivity implements
 
         return super.onOptionsItemSelected(item);
     }
-
-    public void addSchedule(final View view) {
-        final Intent intent = new Intent(this, SettingsActivity.class);
-        intent.putExtra("firstTime", true);
-        startActivity(intent);
-    }
 }

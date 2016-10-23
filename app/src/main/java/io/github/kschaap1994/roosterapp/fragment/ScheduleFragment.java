@@ -54,8 +54,9 @@ public class ScheduleFragment extends Fragment implements WeekView.EventClickLis
         setupDateTimeInterpreter(false);
 
         weekView.notifyDatasetChanged();
-
         getActivity().setTitle("Schedule");
+
+        weekView.goToHour(Calendar.getInstance().get(Calendar.HOUR_OF_DAY)); //goes to current hour
 
         return view;
     }

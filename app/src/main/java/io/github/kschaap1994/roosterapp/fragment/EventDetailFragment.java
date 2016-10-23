@@ -69,11 +69,22 @@ public class EventDetailFragment extends Fragment {
             final String location = bundle.getString("location");
 
             nameTextView.setText(name);
-            startTimeTextView.setText(startTime.toString());
-            endTimeTextView.setText(endTime.toString());
+            startTimeTextView.setText(formatTime(startTime));
+            endTimeTextView.setText(formatTime(endTime));
             locationTextView.setText(location);
+
+            getActivity().setTitle(name);
         }
+
         return view;
+    }
+
+    private String formatTime(final Calendar time) {
+        final int hour = time.get(Calendar.HOUR_OF_DAY);
+        final int minute = time.get(Calendar.MINUTE);
+
+        return String.format("%s:%s", (hour >= 10) ? hour : "0" + hour,
+                (minute >= 10) ? minute : "0" + minute);
     }
 
     @OnClick(R.id.location)

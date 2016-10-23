@@ -83,6 +83,7 @@ public class SettingsFragment extends Fragment {
 
     private boolean validate() {
         boolean valid = true;
+
         if (addClass.getText().toString().isEmpty()) {
             addClass.setError("Classname is empty");
             valid = false;
