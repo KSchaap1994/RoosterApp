@@ -91,6 +91,7 @@ public class TimeTable {
         event.setName(getDescription());
         event.setStartTime(start);
         event.setEndTime(end);
+        event.setLocation(getLocation());
 
         return event;
     }

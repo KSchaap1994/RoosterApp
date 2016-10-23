@@ -1,5 +1,6 @@
 package io.github.kschaap1994.roosterapp.fragment;
 
+import android.content.Intent;
 import android.graphics.RectF;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.kschaap1994.roosterapp.R;
+import io.github.kschaap1994.roosterapp.activity.EventDetailActivity;
 import io.github.kschaap1994.roosterapp.api.ScheduleService;
 import io.github.kschaap1994.roosterapp.api.model.TimeTable;
 import io.github.kschaap1994.roosterapp.database.DbLab;
@@ -34,18 +36,9 @@ public class ScheduleFragment extends Fragment implements WeekView.EventClickLis
     public WeekView weekView;
     @BindView(R.id.avi)
     public AVLoadingIndicatorView loadingIndicatorView;
+
     private boolean synced = false;
     private List<WeekViewEvent> events = new ArrayList<>();
-
-    public ScheduleFragment() {
-        // Required empty public constructor
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putBoolean("synced", synced);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,6 +58,12 @@ public class ScheduleFragment extends Fragment implements WeekView.EventClickLis
         getActivity().setTitle("Schedule");
 
         return view;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("synced", synced);
     }
 
     private void setupDateTimeInterpreter(final boolean shortDate) {
@@ -108,7 +107,7 @@ public class ScheduleFragment extends Fragment implements WeekView.EventClickLis
 
         final List<WeekViewEvent> matchedEvents = new ArrayList<>();
         for (WeekViewEvent event : events) {
-            if (eventMatches(event, newYear, newMonth - 1)) { // -1, because month start at index 0.
+            if (eventMatches(event, newYear, newMonth - 1)) { // -1, because month starts at index 0.
                 matchedEvents.add(event);
             }
         }
@@ -117,7 +116,14 @@ public class ScheduleFragment extends Fragment implements WeekView.EventClickLis
 
     @Override
     public void onEventClick(WeekViewEvent event, RectF eventRect) {
+        final Intent intent = new Intent(getActivity(), EventDetailActivity.class);
 
+        intent.putExtra("eventName", event.getName());
+        intent.putExtra("startTime", event.getStartTime());
+        intent.putExtra("endTime", event.getEndTime());
+        intent.putExtra("location", event.getLocation());
+
+        startActivity(intent);
     }
 
     private class TimeTableTask extends AsyncTask<String, Void, List<TimeTable>> {
@@ -141,6 +147,7 @@ public class ScheduleFragment extends Fragment implements WeekView.EventClickLis
             for (TimeTable timeTable : result) {
                 events.add(timeTable.toWeekViewEvent());
             }
+
             weekView.notifyDatasetChanged();
             loadingIndicatorView.hide();
         }

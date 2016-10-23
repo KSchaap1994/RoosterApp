@@ -1,5 +1,6 @@
 package io.github.kschaap1994.roosterapp.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,6 +14,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.github.kschaap1994.roosterapp.R;
 import io.github.kschaap1994.roosterapp.activity.MainActivity;
+import io.github.kschaap1994.roosterapp.activity.ScheduleActivity;
 import io.github.kschaap1994.roosterapp.database.DbLab;
 
 /**
@@ -32,6 +34,10 @@ public class SettingsFragment extends Fragment {
 
     public SettingsFragment() {
         // Required empty public constructor
+    }
+
+    public static SettingsFragment getInstance() {
+        return null;
     }
 
     @Override
@@ -69,14 +75,10 @@ public class SettingsFragment extends Fragment {
         lab.addOrUpdateSetting("firstName", firstName);
         lab.addOrUpdateSetting("lastName", lastName);
 
-        final MainActivity activity = (MainActivity) getActivity();
-        final Fragment fragment = getFragmentManager().findFragmentByTag("settings");
+        getActivity().finish();
 
-        if (fragment != null) {
-            getFragmentManager().popBackStack("settings",
-                    FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        }
-        activity.setupFragment();
+        final Intent intent = new Intent(getActivity(), ScheduleActivity.class);
+        startActivity(intent);
     }
 
     private boolean validate() {
