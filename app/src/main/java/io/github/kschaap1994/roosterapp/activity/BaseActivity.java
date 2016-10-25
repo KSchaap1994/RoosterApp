@@ -79,11 +79,13 @@ public abstract class BaseActivity extends AppCompatActivity implements
 
         switch (id) {
             case R.id.nav_home:
-                final Intent home = new Intent(this, ScheduleActivity.class);
+                final Intent home = new Intent(this, ScheduleActivity.class).
+                        addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(home);
                 break;
             case R.id.nav_settings:
-                final Intent settings = new Intent(this, SettingsActivity.class);
+                final Intent settings = new Intent(this, SettingsActivity.class).
+                        addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(settings);
                 break;
         }
@@ -99,24 +101,5 @@ public abstract class BaseActivity extends AppCompatActivity implements
         } else {
             super.onBackPressed();
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(final Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(final MenuItem item) {
-        final int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }

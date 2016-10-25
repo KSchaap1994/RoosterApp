@@ -1,7 +1,10 @@
 package io.github.kschaap1994.roosterapp.activity;
 
 import android.support.v4.app.Fragment;
+import android.view.Menu;
+import android.view.MenuItem;
 
+import io.github.kschaap1994.roosterapp.R;
 import io.github.kschaap1994.roosterapp.fragment.ScheduleFragment;
 
 /**
@@ -14,4 +17,5 @@ public class ScheduleActivity extends BaseActivity {
     public Fragment createFragment() {
         return new ScheduleFragment();
     }
+
 }

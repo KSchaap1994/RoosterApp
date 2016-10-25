@@ -3,7 +3,6 @@ package io.github.kschaap1994.roosterapp.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.github.kschaap1994.roosterapp.R;
-import io.github.kschaap1994.roosterapp.activity.MainActivity;
 import io.github.kschaap1994.roosterapp.activity.ScheduleActivity;
 import io.github.kschaap1994.roosterapp.database.DbLab;
 

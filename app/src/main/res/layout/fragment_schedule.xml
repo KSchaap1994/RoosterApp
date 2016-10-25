@@ -1,39 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     tools:context="io.github.kschaap1994.roosterapp.fragment.ScheduleFragment">
 
-    <com.alamkanak.weekview.WeekView
-        android:id="@+id/weekView"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:columnGap="5dp"
-        app:dayBackgroundColor="#05000000"
-        app:eventTextColor="@android:color/white"
-        app:headerColumnBackground="#ffffffff"
-        app:headerColumnPadding="8dp"
-        app:headerColumnTextColor="@color/toolbar_text"
-        app:headerRowBackgroundColor="@color/toolbar"
-        app:headerRowPadding="8dp"
-        app:hourHeight="60dp"
-        app:noOfVisibleDays="3"
-        app:textSize="12sp"
-        app:todayBackgroundColor="#1848adff"
-        app:todayHeaderTextColor="@color/accent"
-        app:showFirstDayOfWeekFirst="true"/>
+        android:layout_height="wrap_content">
 
-    <com.wang.avi.AVLoadingIndicatorView
-        android:id="@+id/avi"
-        style="@style/AVLoadingIndicatorView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="visible"
-        app:indicatorName="BallPulseIndicator"
-        app:indicatorColor="#FF3333"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"/>
+        <com.alamkanak.weekview.WeekView
+            android:id="@+id/weekView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:columnGap="5dp"
+            app:dayBackgroundColor="#05000000"
+            app:eventTextColor="@android:color/white"
+            app:headerColumnBackground="#ffffffff"
+            app:headerColumnPadding="8dp"
+            app:headerColumnTextColor="@color/toolbar_text"
+            app:headerRowBackgroundColor="@color/toolbar"
+            app:headerRowPadding="8dp"
+            app:hourHeight="60dp"
+            app:noOfVisibleDays="3"
+            app:showFirstDayOfWeekFirst="true"
+            app:textSize="12sp"
+            app:todayBackgroundColor="#1848adff"
+            app:todayHeaderTextColor="@color/accent" />
 
-</RelativeLayout>
+        <com.wang.avi.AVLoadingIndicatorView
+            android:id="@+id/avi"
+            style="@style/AVLoadingIndicatorView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:visibility="visible"
+            app:indicatorColor="#FF3333"
+            app:indicatorName="BallPulseIndicator" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/empty_layout_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/empty_layout_image"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="18dp"
+            android:text="@string/placeHolderText"
+            android:textAppearance="@android:style/TextAppearance.Medium"
+            android:textColor="@color/toolbar_text"
+            android:textStyle="normal|bold" />
+
+        <ImageView
+            android:id="@+id/empty_layout_image"
+            android:layout_width="175dp"
+            android:layout_height="175dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="62dp"
+            android:contentDescription="Placeholder image"
+            app:srcCompat="@drawable/schedule" />
+
+        <TextView
+            android:id="@+id/empty_layout_subtext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/empty_layout_header"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="18dp"
+            android:drawableEnd="@drawable/plus"
+            android:text="@string/add_schedules"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+</LinearLayout>

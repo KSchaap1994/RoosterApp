@@ -4,10 +4,18 @@ import android.content.Intent;
 import android.graphics.RectF;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.alamkanak.weekview.DateTimeInterpreter;
 import com.alamkanak.weekview.MonthLoader;
@@ -23,11 +31,15 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.github.kschaap1994.roosterapp.R;
 import io.github.kschaap1994.roosterapp.activity.EventDetailActivity;
+import io.github.kschaap1994.roosterapp.activity.SettingsActivity;
 import io.github.kschaap1994.roosterapp.api.ScheduleService;
 import io.github.kschaap1994.roosterapp.api.model.TimeTable;
 import io.github.kschaap1994.roosterapp.database.DbLab;
+
+import static android.view.View.GONE;
 
 public class ScheduleFragment extends Fragment implements WeekView.EventClickListener,
         MonthLoader.MonthChangeListener {
@@ -36,15 +48,44 @@ public class ScheduleFragment extends Fragment implements WeekView.EventClickLis
     public WeekView weekView;
     @BindView(R.id.avi)
     public AVLoadingIndicatorView loadingIndicatorView;
+    @BindView(R.id.empty_layout_subtext)
+    public TextView subtext;
+    @BindView(R.id.empty_layout_header)
+    public TextView header;
+    @BindView(R.id.empty_layout_image)
+    public ImageView image;
 
     private boolean synced = false;
     private List<WeekViewEvent> events = new ArrayList<>();
+    private DbLab lab;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+
+        lab = DbLab.get(getActivity());
+    }
+
+    private void hideViews() {
+        if (lab.hasSettings()) {
+            subtext.setVisibility(GONE);
+            header.setVisibility(GONE);
+            image.setVisibility(GONE);
+        } else {
+            weekView.setVisibility(GONE);
+            loadingIndicatorView.setVisibility(GONE);
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_schedule, container, false);
+
         ButterKnife.bind(this, view);
+
+        hideViews();
 
         synced = savedInstanceState != null && savedInstanceState.getBoolean("synced");
 
@@ -59,6 +100,13 @@ public class ScheduleFragment extends Fragment implements WeekView.EventClickLis
         weekView.goToHour(Calendar.getInstance().get(Calendar.HOUR_OF_DAY)); //goes to current hour
 
         return view;
+    }
+
+    @OnClick(R.id.empty_layout_subtext)
+    public void addSchedule() {
+        final Intent intent = new Intent(getActivity(), SettingsActivity.class);
+        intent.putExtra("firstTime", true);
+        startActivity(intent);
     }
 
     @Override
@@ -125,6 +173,24 @@ public class ScheduleFragment extends Fragment implements WeekView.EventClickLis
         intent.putExtra("location", event.getLocation());
 
         startActivity(intent);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.activity_schedule, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(final MenuItem item) {
+        final int id = item.getItemId();
+
+        if (id == R.id.today) {
+            weekView.goToToday();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private class TimeTableTask extends AsyncTask<String, Void, List<TimeTable>> {

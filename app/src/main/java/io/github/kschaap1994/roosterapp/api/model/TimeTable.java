@@ -19,7 +19,7 @@ public class TimeTable {
     private final String description;
 
     @Expose
-    private final List<String> tutors;
+    private final String tutors;
 
     @Expose
     private final Date startTime;
@@ -34,10 +34,10 @@ public class TimeTable {
     private final String location;
 
     @Expose
-    private final List<String> studentSets;
+    private final String studentSets;
 
-    public TimeTable(int id, String description, List<String> tutors, Date startTime,
-                     Date endTime, boolean allDay, String location, List<String> studentSets) {
+    public TimeTable(int id, String description, String tutors, Date startTime,
+                     Date endTime, boolean allDay, String location, String studentSets) {
         this.id = id;
         this.description = description;
         this.tutors = tutors;
@@ -56,7 +56,7 @@ public class TimeTable {
         return description;
     }
 
-    public List<String> getTutors() {
+    public String getTutors() {
         return tutors;
     }
 
@@ -76,7 +76,7 @@ public class TimeTable {
         return location;
     }
 
-    public List<String> getStudentSets() {
+    public String getStudentSets() {
         return studentSets;
     }
 

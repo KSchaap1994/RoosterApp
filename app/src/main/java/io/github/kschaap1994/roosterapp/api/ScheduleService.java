@@ -18,7 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ScheduleService {
     private final String API_URL = "https://roosterapi.000webhostapp.com/api/";
-    private final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
+    private final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
     private Retrofit retrofit;
     private Gson gson;
     private List<TimeTable> timeTables;
@@ -35,7 +35,6 @@ public class ScheduleService {
 
         final Call<List<TimeTable>> call = schedule.timeTables(studentSet);
 
-        // Fetch and print a list of the contributors to the library.
         try {
             timeTables = call.execute().body();
         } catch (IOException e) {
