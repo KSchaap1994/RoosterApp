@@ -31,11 +31,14 @@ public class ScheduleService {
         retrofit = new Retrofit.Builder().baseUrl(API_URL).
                 addConverterFactory(GsonConverterFactory.create(gson)).build();
 
+        // Attach the model class to it
         final Schedule schedule = retrofit.create(Schedule.class);
 
+        // Prepare to make the request to the API
         final Call<List<TimeTable>> call = schedule.timeTables(studentSet);
 
         try {
+            // Make the request
             timeTables = call.execute().body();
         } catch (IOException e) {
             e.printStackTrace();

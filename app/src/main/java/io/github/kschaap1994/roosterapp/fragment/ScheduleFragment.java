@@ -6,7 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,7 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alamkanak.weekview.DateTimeInterpreter;
@@ -38,6 +37,7 @@ import io.github.kschaap1994.roosterapp.activity.SettingsActivity;
 import io.github.kschaap1994.roosterapp.api.ScheduleService;
 import io.github.kschaap1994.roosterapp.api.model.TimeTable;
 import io.github.kschaap1994.roosterapp.database.DbLab;
+import io.github.kschaap1994.roosterapp.util.Toaster;
 
 import static android.view.View.GONE;
 
@@ -203,13 +203,25 @@ public class ScheduleFragment extends Fragment implements WeekView.EventClickLis
         @Override
         protected List<TimeTable> doInBackground(String... params) {
             final DbLab lab = DbLab.get(getActivity());
-            final ScheduleService scheduleService = new ScheduleService(lab.getSetting("class"));
+            final ScheduleService scheduleService =
+                    new ScheduleService(lab.getSetting("class"));
             return scheduleService.getTimeTables();
         }
 
         @Override
         protected void onPostExecute(List<TimeTable> result) {
-            if (result == null) return;
+            if (result == null) { // The API didn't give any JSON data
+                Toaster.
+                        fromContext(getActivity()).
+                        setText("Failed to reach the API. Please try to restart " +
+                                "the application").
+                        setGravity(Gravity.BOTTOM).
+                        setDuration(2500). // 2.5 seconds
+                        show();
+
+                loadingIndicatorView.hide();
+                return;
+            }
 
             for (TimeTable timeTable : result) {
                 events.add(timeTable.toWeekViewEvent());

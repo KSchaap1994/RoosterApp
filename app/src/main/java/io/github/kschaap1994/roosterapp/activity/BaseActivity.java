@@ -13,14 +13,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.kschaap1994.roosterapp.R;
-import io.github.kschaap1994.roosterapp.database.DbLab;
 
 /**
  * Created by Kevin on 21-10-2016.
@@ -29,8 +26,6 @@ import io.github.kschaap1994.roosterapp.database.DbLab;
 public abstract class BaseActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener {
 
-    public abstract Fragment createFragment();
-
     @BindView(R.id.toolbar)
     public Toolbar toolbar;
     @BindView(R.id.drawer_layout)
@@ -38,7 +33,7 @@ public abstract class BaseActivity extends AppCompatActivity implements
     @BindView(R.id.nav_view)
     public NavigationView navigationView;
 
-    protected DbLab lab;
+    public abstract Fragment createFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +52,6 @@ public abstract class BaseActivity extends AppCompatActivity implements
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
-
-        lab = DbLab.get(this);
 
         //Get FragmentManager
         final FragmentManager fm = getSupportFragmentManager();
@@ -80,12 +73,11 @@ public abstract class BaseActivity extends AppCompatActivity implements
         switch (id) {
             case R.id.nav_home:
                 final Intent home = new Intent(this, ScheduleActivity.class).
-                        addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(home);
                 break;
             case R.id.nav_settings:
-                final Intent settings = new Intent(this, SettingsActivity.class).
-                        addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                final Intent settings = new Intent(this, SettingsActivity.class);
                 startActivity(settings);
                 break;
         }

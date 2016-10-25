@@ -36,12 +36,6 @@ public class EventDetailFragment extends Fragment {
         // Required empty public constructor
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-
     public static EventDetailFragment getInstance(final String name, final Calendar startTime,
                                                   final Calendar endTime, final String location) {
         EventDetailFragment fragment = new EventDetailFragment();
@@ -53,6 +47,12 @@ public class EventDetailFragment extends Fragment {
         fragment.setArguments(args);
 
         return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
     }
 
     @Override

@@ -1,13 +1,12 @@
 package io.github.kschaap1994.roosterapp.activity;
 
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -16,8 +15,8 @@ import io.github.kschaap1994.roosterapp.util.Locations;
 
 public class LocationActivity extends FragmentActivity implements OnMapReadyCallback {
 
-    private GoogleMap mMap;
     private final int DEFAULT_ZOOM = 17;
+    private GoogleMap mMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

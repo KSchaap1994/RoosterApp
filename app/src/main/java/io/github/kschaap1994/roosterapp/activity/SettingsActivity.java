@@ -14,7 +14,6 @@ public class SettingsActivity extends BaseActivity {
     public Fragment createFragment() {
 
 
-
         return new SettingsFragment();
     }
 }

@@ -5,7 +5,6 @@ import com.google.gson.annotations.Expose;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by Kevin on 17-10-2016.

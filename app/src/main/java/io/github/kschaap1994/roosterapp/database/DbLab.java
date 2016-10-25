@@ -16,9 +16,14 @@ import java.util.Map;
 public class DbLab {
 
     private static DbLab lab;
+    private final Map<String, String> settings = new HashMap<>();
     private Context context;
     private SQLiteDatabase db;
-    private final Map<String, String> settings = new HashMap<>();
+
+    private DbLab(final Context context) {
+        this.context = context.getApplicationContext();
+        db = new DbHelper(context).getWritableDatabase();
+    }
 
     public static DbLab get(final Context context) {
         if (lab == null) {
@@ -27,9 +32,12 @@ public class DbLab {
         return lab;
     }
 
-    private DbLab(final Context context) {
-        this.context = context.getApplicationContext();
-        db = new DbHelper(context).getWritableDatabase();
+    private static ContentValues getContentValues(final String name, final String value) {
+        final ContentValues values = new ContentValues();
+        values.put(DbSchema.SettingsTable.Cols.NAME, name);
+        values.put(DbSchema.SettingsTable.Cols.VALUE, value);
+
+        return values;
     }
 
     private CustomCursorWrapper query(String whereClause, String[] whereArgs) {
@@ -52,14 +60,6 @@ public class DbLab {
             db.update(DbSchema.SettingsTable.NAME, values, null, null);
         else
             db.insert(DbSchema.SettingsTable.NAME, null, values);
-    }
-
-    private static ContentValues getContentValues(final String name, final String value) {
-        final ContentValues values = new ContentValues();
-        values.put(DbSchema.SettingsTable.Cols.NAME, name);
-        values.put(DbSchema.SettingsTable.Cols.VALUE, value);
-
-        return values;
     }
 
     public boolean hasSettings() {

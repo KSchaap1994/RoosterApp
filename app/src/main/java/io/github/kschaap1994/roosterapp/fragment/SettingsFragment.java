@@ -21,14 +21,13 @@ import io.github.kschaap1994.roosterapp.database.DbLab;
 
 public class SettingsFragment extends Fragment {
 
+    private final String FRAGMENT_TITLE = "Options";
     @BindView(R.id.add_class)
     public EditText addClass;
     @BindView(R.id.add_first_name)
     public EditText addFirstName;
     @BindView(R.id.add_last_name)
     public EditText addLastName;
-
-    private final String FRAGMENT_TITLE = "Options";
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -72,8 +71,6 @@ public class SettingsFragment extends Fragment {
         lab.addOrUpdateSetting("class", className);
         lab.addOrUpdateSetting("firstName", firstName);
         lab.addOrUpdateSetting("lastName", lastName);
-
-        getActivity().finish();
 
         final Intent intent = new Intent(getActivity(), ScheduleActivity.class);
         startActivity(intent);
