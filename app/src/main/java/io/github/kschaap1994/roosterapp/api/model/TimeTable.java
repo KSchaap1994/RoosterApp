@@ -6,6 +6,8 @@ import com.google.gson.annotations.Expose;
 import java.util.Calendar;
 import java.util.Date;
 
+import io.github.kschaap1994.roosterapp.util.CustomWeekViewEvent;
+
 /**
  * Created by Kevin on 17-10-2016.
  */
@@ -79,14 +81,14 @@ public class TimeTable {
         return studentSets;
     }
 
-    public WeekViewEvent toWeekViewEvent() {
+    public CustomWeekViewEvent toWeekViewEvent() {
         final Calendar start = Calendar.getInstance();
         start.setTime(getStartTime());
 
         final Calendar end = (Calendar) start.clone();
         end.setTime(getEndTime());
 
-        final WeekViewEvent event = new WeekViewEvent();
+        final CustomWeekViewEvent event = new CustomWeekViewEvent();
         event.setName(getDescription());
         event.setStartTime(start);
         event.setEndTime(end);

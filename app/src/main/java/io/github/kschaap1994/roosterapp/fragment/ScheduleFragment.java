@@ -23,6 +23,7 @@ import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
 import com.wang.avi.AVLoadingIndicatorView;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -38,6 +39,7 @@ import io.github.kschaap1994.roosterapp.activity.SettingsActivity;
 import io.github.kschaap1994.roosterapp.api.ScheduleService;
 import io.github.kschaap1994.roosterapp.api.model.TimeTable;
 import io.github.kschaap1994.roosterapp.database.DbLab;
+import io.github.kschaap1994.roosterapp.util.CustomWeekViewEvent;
 import io.github.kschaap1994.roosterapp.util.Toaster;
 
 import static android.view.View.GONE;
@@ -58,7 +60,7 @@ public class ScheduleFragment extends Fragment implements WeekView.EventClickLis
     public ImageView image;
 
     private boolean synced = false;
-    private List<WeekViewEvent> events = new ArrayList<>();
+    private List<CustomWeekViewEvent> events = new ArrayList<>();
     private DbLab lab;
 
     private final int ADD_SCHEDULE_REQUEST = 200;
@@ -186,11 +188,16 @@ public class ScheduleFragment extends Fragment implements WeekView.EventClickLis
     @Override
     public void onEventClick(WeekViewEvent event, RectF eventRect) {
         final Intent intent = new Intent(getActivity(), EventDetailActivity.class);
+        final CustomWeekViewEvent customEvent = (CustomWeekViewEvent) event;
 
-        intent.putExtra("eventName", event.getName());
-        intent.putExtra("startTime", event.getStartTime());
-        intent.putExtra("endTime", event.getEndTime());
-        intent.putExtra("location", event.getLocation());
+        intent.putExtra("eventName", customEvent.getName());
+        intent.putExtra("startTime", customEvent.getStartTime());
+        intent.putExtra("endTime", customEvent.getEndTime());
+        intent.putExtra("location", customEvent.getLocation());
+        intent.putExtra("events", (Serializable) events);
+        intent.putExtra("id", events.indexOf(customEvent));
+
+        intent.putExtra("anim", false);
 
         startActivity(intent);
     }
