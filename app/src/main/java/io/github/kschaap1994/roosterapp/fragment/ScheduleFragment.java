@@ -1,5 +1,6 @@
 package io.github.kschaap1994.roosterapp.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.RectF;
 import android.os.AsyncTask;
@@ -40,6 +41,7 @@ import io.github.kschaap1994.roosterapp.database.DbLab;
 import io.github.kschaap1994.roosterapp.util.Toaster;
 
 import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 
 public class ScheduleFragment extends Fragment implements WeekView.EventClickListener,
         MonthLoader.MonthChangeListener {
@@ -59,6 +61,8 @@ public class ScheduleFragment extends Fragment implements WeekView.EventClickLis
     private List<WeekViewEvent> events = new ArrayList<>();
     private DbLab lab;
 
+    private final int ADD_SCHEDULE_REQUEST = 200;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,9 +76,16 @@ public class ScheduleFragment extends Fragment implements WeekView.EventClickLis
             subtext.setVisibility(GONE);
             header.setVisibility(GONE);
             image.setVisibility(GONE);
+
+            weekView.setVisibility(VISIBLE);
+            loadingIndicatorView.setVisibility(VISIBLE);
         } else {
             weekView.setVisibility(GONE);
             loadingIndicatorView.setVisibility(GONE);
+
+            subtext.setVisibility(VISIBLE);
+            header.setVisibility(VISIBLE);
+            image.setVisibility(VISIBLE);
         }
     }
 
@@ -102,11 +113,20 @@ public class ScheduleFragment extends Fragment implements WeekView.EventClickLis
         return view;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == ADD_SCHEDULE_REQUEST) {
+                hideViews();
+            }
+        }
+    }
+
     @OnClick(R.id.empty_layout_subtext)
     public void addSchedule() {
         final Intent intent = new Intent(getActivity(), SettingsActivity.class);
         intent.putExtra("firstTime", true);
-        startActivity(intent);
+        startActivityForResult(intent, ADD_SCHEDULE_REQUEST);
     }
 
     @Override

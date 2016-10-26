@@ -1,5 +1,6 @@
 package io.github.kschaap1994.roosterapp.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -73,7 +74,9 @@ public class SettingsFragment extends Fragment {
         lab.addOrUpdateSetting("lastName", lastName);
 
         final Intent intent = new Intent(getActivity(), ScheduleActivity.class);
-        startActivity(intent);
+        getActivity().setResult(Activity.RESULT_OK, intent);
+
+        getActivity().finish();
     }
 
     private boolean validate() {

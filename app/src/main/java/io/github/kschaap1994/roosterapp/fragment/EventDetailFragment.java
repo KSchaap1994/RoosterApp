@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -21,7 +23,7 @@ import io.github.kschaap1994.roosterapp.activity.LocationActivity;
  * Created by Kevin on 21-10-2016.
  */
 
-public class EventDetailFragment extends Fragment {
+public class EventDetailFragment extends Fragment implements View.OnTouchListener {
 
     @BindView(R.id.event_name)
     public TextView nameTextView;
@@ -31,6 +33,9 @@ public class EventDetailFragment extends Fragment {
     public TextView endTimeTextView;
     @BindView(R.id.location)
     public TextView locationTextView;
+
+    private float downX, downY, upX, upY;
+    private final int MIN_DISTANCE = 80;
 
     public EventDetailFragment() {
         // Required empty public constructor
@@ -74,6 +79,8 @@ public class EventDetailFragment extends Fragment {
             locationTextView.setText(location);
 
             getActivity().setTitle(name);
+
+            view.setOnTouchListener(this);
         }
 
         return view;
@@ -92,6 +99,51 @@ public class EventDetailFragment extends Fragment {
         final Intent intent = new Intent(getActivity(), LocationActivity.class);
         final String location = locationTextView.getText().subSequence(0, 3).toString();
         intent.putExtra("location", location);
+
         startActivity(intent);
+    }
+
+    private void nextEvent() {
+        Toast.makeText(getActivity(), "next event",
+                Toast.LENGTH_SHORT).show();
+    }
+
+    private void previousEvent() {
+        Toast.makeText(getActivity(), "previous event",
+                Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                downX = event.getX();
+                downY = event.getY();
+
+                return true;
+            case MotionEvent.ACTION_UP:
+                upX = event.getX();
+                upY = event.getY();
+
+                float deltaX = downX - upX;
+                float deltaY = downY - upY;
+
+                // Handle horizontal right swipe
+                if (Math.abs(deltaX) > Math.abs(deltaY)) {
+                    if (Math.abs(deltaX) > MIN_DISTANCE) {
+                        if (deltaX > 0) {
+                            nextEvent();
+                            return true;
+                        }
+                        if (deltaX < 0) {
+                            previousEvent();
+                            return true;
+                        }
+                    } else {
+                        return false;
+                    }
+                }
+        }
+        return false;
     }
 }
