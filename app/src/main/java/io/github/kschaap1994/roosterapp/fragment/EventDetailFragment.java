@@ -162,6 +162,7 @@ public class EventDetailFragment extends Fragment implements View.OnTouchListene
         intent.putExtra("id", id + 1);
 
         getActivity().startActivity(intent);
+        getActivity().finish();
     }
 
     private void previousEvent() {
@@ -186,8 +187,8 @@ public class EventDetailFragment extends Fragment implements View.OnTouchListene
         intent.putExtra("events", (Serializable) events);
         intent.putExtra("id", id - 1);
 
-        getActivity().finish();
         getActivity().startActivity(intent);
+        getActivity().finish();
     }
 
     @Override
