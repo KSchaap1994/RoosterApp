@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DbHelper extends SQLiteOpenHelper {
     private static final int VERSION = 1;
-    private static final String DATABASE_NAME = "settings.db";
+    private static final String DATABASE_NAME = "rooster_app.db";
 
 
     public DbHelper(Context context) {

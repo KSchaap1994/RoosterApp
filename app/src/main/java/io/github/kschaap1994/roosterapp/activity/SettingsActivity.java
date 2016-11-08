@@ -12,8 +12,6 @@ public class SettingsActivity extends BaseActivity {
 
     @Override
     public Fragment createFragment() {
-
-
         return new SettingsFragment();
     }
 }

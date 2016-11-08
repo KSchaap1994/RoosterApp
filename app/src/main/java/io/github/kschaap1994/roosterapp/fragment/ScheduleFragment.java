@@ -230,6 +230,15 @@ public class ScheduleFragment extends Fragment implements WeekView.EventClickLis
         @Override
         protected List<TimeTable> doInBackground(String... params) {
             final DbLab lab = DbLab.get(getActivity());
+            System.out.println(lab.hasSettings());
+            System.out.println(lab.getSettings().size());
+
+            for (String key : lab.getSettings().keySet()) {
+                System.out.println(key);
+            }
+
+            //System.out.println(lab.getSetting("class"));
+
             final ScheduleService scheduleService =
                     new ScheduleService(lab.getSetting("class"));
             return scheduleService.getTimeTables();

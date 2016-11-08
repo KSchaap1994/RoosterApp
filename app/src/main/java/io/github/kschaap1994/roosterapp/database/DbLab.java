@@ -34,6 +34,7 @@ public class DbLab {
 
     private static ContentValues getContentValues(final String name, final String value) {
         final ContentValues values = new ContentValues();
+
         values.put(DbSchema.SettingsTable.Cols.NAME, name);
         values.put(DbSchema.SettingsTable.Cols.VALUE, value);
 
@@ -55,11 +56,17 @@ public class DbLab {
 
     public void addOrUpdateSetting(final String name, final String value) {
         final ContentValues values = getContentValues(name, value);
+        hasSettings(); //to fill settings hashmap TODO
 
-        if (settings.containsKey(name))
-            db.update(DbSchema.SettingsTable.NAME, values, null, null);
-        else
+        if (settings.containsKey(name)) {
+            System.out.println("updating " + name + " (" + value + ")");
+            //db.update(DbSchema.SettingsTable.NAME, values, null, null);
+            db.update(DbSchema.SettingsTable.NAME, values, DbSchema.SettingsTable.Cols.NAME
+                    + " = ?", new String[] {name});
+        } else {
+            System.out.println("inserting " + name + " (" + value + ")");
             db.insert(DbSchema.SettingsTable.NAME, null, values);
+        }
     }
 
     public boolean hasSettings() {
@@ -71,6 +78,10 @@ public class DbLab {
             }
         }
         return !settings.isEmpty();
+    }
+
+    public Map<String, String> getSettings() {
+        return settings;
     }
 
     public String getSetting(final String name) {

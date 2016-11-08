@@ -34,10 +34,6 @@ public class SettingsFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static SettingsFragment getInstance() {
-        return null;
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -53,6 +49,8 @@ public class SettingsFragment extends Fragment {
 
     public void setSettings() {
         final DbLab lab = DbLab.get(getActivity());
+
+        if (!lab.hasSettings()) return;
 
         addClass.setText(lab.getSetting("class"));
         addFirstName.setText(lab.getSetting("firstName"));
